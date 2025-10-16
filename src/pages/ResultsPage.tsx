@@ -81,6 +81,26 @@ export const ResultsPage: React.FC = () => {
     navigate('/compare/start');
   };
 
+  // Determine theme to style tooltips appropriately (light/dark)
+  const isDark = typeof document !== 'undefined' && document.documentElement.classList.contains('dark');
+  const tooltipStyles = {
+    contentStyle: {
+      backgroundColor: isDark ? 'rgba(2,6,23,0.95)' : 'rgba(255,255,255,0.98)',
+      border: `1px solid ${isDark ? '#334155' : '#e5e7eb'}`,
+      borderRadius: 8,
+      color: isDark ? '#e2e8f0' : '#0f172a',
+      boxShadow: isDark ? '0 8px 24px rgba(0,0,0,0.5)' : '0 8px 24px rgba(0,0,0,0.15)'
+    } as React.CSSProperties,
+    itemStyle: {
+      color: isDark ? '#cbd5e1' : '#0f172a',
+    } as React.CSSProperties,
+    labelStyle: {
+      color: isDark ? '#94a3b8' : '#64748b',
+      fontWeight: 600
+    } as React.CSSProperties,
+    cursorFill: isDark ? 'rgba(148,163,184,0.18)' : 'rgba(2,6,23,0.08)'
+  };
+
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
@@ -132,7 +152,13 @@ export const ResultsPage: React.FC = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis type="number" domain={[0, 100]} />
             <YAxis dataKey="name" type="category" width={150} />
-            <Tooltip formatter={(value) => `${value}%`} />
+            <Tooltip
+              formatter={(value) => `${value}%`}
+              contentStyle={tooltipStyles.contentStyle}
+              itemStyle={tooltipStyles.itemStyle}
+              labelStyle={tooltipStyles.labelStyle}
+              cursor={{ fill: tooltipStyles.cursorFill }}
+            />
             <Bar dataKey="compatibility" name="Compatibilidad" radius={[0, 8, 8, 0]}>
               {compatibilityData.map((_, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -154,7 +180,12 @@ export const ResultsPage: React.FC = () => {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="name" />
             <YAxis />
-            <Tooltip />
+            <Tooltip
+              contentStyle={tooltipStyles.contentStyle}
+              itemStyle={tooltipStyles.itemStyle}
+              labelStyle={tooltipStyles.labelStyle}
+              cursor={{ fill: tooltipStyles.cursorFill }}
+            />
             <Legend />
             <Bar dataKey="rating" name="Calificación" stackId="a" fill="#0ea5e9" />
             <Bar dataKey="duration" name="Duración" stackId="a" fill="#38bdf8" />

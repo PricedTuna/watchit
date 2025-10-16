@@ -11,13 +11,13 @@ import { CriteriaWeights } from '../types';
 interface CriteriaModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onComplete: () => void;
+  onSave: () => void;
 }
 
 export const CriteriaModal: React.FC<CriteriaModalProps> = ({
   isOpen,
   onClose,
-  onComplete
+  onSave
 }) => {
   const { criteriaWeights, setCriteriaWeights, targetDuration, setTargetDuration } = useComparison();
   const { user } = useAuth();
@@ -61,7 +61,7 @@ export const CriteriaModal: React.FC<CriteriaModalProps> = ({
 
     setCriteriaWeights(normalizedWeights);
     setTargetDuration(useTarget ? localTarget : undefined);
-    onComplete();
+    onSave();
   };
 
   return (
@@ -155,7 +155,7 @@ export const CriteriaModal: React.FC<CriteriaModalProps> = ({
           </p>
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-3 justify-between">
           <Button
             variant="secondary"
             onClick={handleReset}
@@ -164,9 +164,14 @@ export const CriteriaModal: React.FC<CriteriaModalProps> = ({
             <RotateCcw className="w-4 h-4" />
             <span>Restablecer por Defecto</span>
           </Button>
-          <Button onClick={handleSave} fullWidth>
-            Guardar y Comparar
-          </Button>
+          <div className="flex gap-3 ml-auto">
+            <Button variant="secondary" onClick={onClose}>
+              Cancelar
+            </Button>
+            <Button onClick={handleSave}>
+              Guardar
+            </Button>
+          </div>
         </div>
       </div>
     </Modal>

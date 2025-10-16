@@ -35,9 +35,8 @@ export const ComparePage: React.FC = () => {
     setIsCriteriaModalOpen(true);
   };
 
-  const handleComparisionComplete = () => {
+  const handleSaveCriteria = () => {
     setIsCriteriaModalOpen(false);
-    navigate('/results');
   };
 
   return (
@@ -95,14 +94,22 @@ export const ComparePage: React.FC = () => {
                 </span>
               ))}
             </div>
-            <div className="mt-4">
+            <div className="mt-4 flex flex-wrap gap-3">
               <Button
                 onClick={handleOpenCriteria}
                 disabled={selectedMovies.length < 2}
+                variant="secondary"
                 className="flex items-center space-x-2"
               >
                 <Settings className="w-5 h-5" />
-                <span>Configurar Criterios y Comparar</span>
+                <span>Configurar</span>
+              </Button>
+              <Button
+                onClick={() => navigate('/results')}
+                disabled={selectedMovies.length < 2}
+                className="flex items-center space-x-2"
+              >
+                <span>Comparar</span>
               </Button>
             </div>
           </div>
@@ -124,7 +131,7 @@ export const ComparePage: React.FC = () => {
       <CriteriaModal
         isOpen={isCriteriaModalOpen}
         onClose={() => setIsCriteriaModalOpen(false)}
-        onComplete={handleComparisionComplete}
+        onSave={handleSaveCriteria}
       />
     </div>
   );
