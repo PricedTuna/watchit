@@ -86,7 +86,7 @@ export const ResultsPage: React.FC = () => {
       <div className="flex items-center justify-between">
         <Link
           to="/compare"
-          className="inline-flex items-center space-x-2 text-sky-500 hover:text-sky-600 transition"
+          className="inline-flex items-center space-x-2 text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 transition"
         >
           <ArrowLeft className="w-5 h-5" />
           <span>Volver a comparación</span>
@@ -97,33 +97,33 @@ export const ResultsPage: React.FC = () => {
         </Button>
       </div>
 
-      <div className="bg-white rounded-xl shadow-lg p-8 border-2 border-sky-200">
+      <div className="bg-white dark:bg-slate-900 rounded-xl shadow-lg p-8 border-2 border-primary-200 dark:border-slate-800">
         <div className="flex items-center justify-center mb-4">
           <Trophy className="w-12 h-12 text-yellow-500" />
         </div>
-        <h1 className="text-3xl font-bold text-center text-gray-900 mb-2">
+        <h1 className="text-3xl font-bold text-center text-gray-900 dark:text-slate-100 mb-2">
           Película Recomendada
         </h1>
         <div className="text-center">
-          <h2 className="text-4xl font-bold text-sky-600 mb-4">{winner.movie.title}</h2>
+          <h2 className="text-4xl font-bold text-primary-600 dark:text-primary-400 mb-4">{winner.movie.title}</h2>
           <div className="flex items-center justify-center mb-4">
             <StarRating rating={winner.movie.rating} size="lg" />
           </div>
-          <div className="inline-block px-6 py-3 bg-sky-100 rounded-full">
-            <span className="text-2xl font-bold text-sky-700">
+          <div className="inline-block px-6 py-3 bg-primary-100 dark:bg-slate-800 rounded-full">
+            <span className="text-2xl font-bold text-primary-700 dark:text-primary-300">
               {Math.round(winner.totalScore * 100)}% de Compatibilidad
             </span>
           </div>
-          <p className="mt-4 text-gray-600 max-w-2xl mx-auto">{winner.movie.synopsis}</p>
+          <p className="mt-4 text-gray-600 dark:text-slate-400 max-w-2xl mx-auto">{winner.movie.synopsis}</p>
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-lg p-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+      <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-xl shadow-lg p-8">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-slate-100 mb-2">
           Compatibilidad General
         </h2>
         {targetDuration != null && (
-          <div className="text-sm text-gray-600 mb-4">
+          <div className="text-sm text-gray-600 dark:text-slate-400 mb-4">
             Duración objetivo activa: <span className="font-medium">{targetDuration} min</span>
           </div>
         )}
@@ -140,13 +140,13 @@ export const ResultsPage: React.FC = () => {
             </Bar>
           </BarChart>
         </ResponsiveContainer>
-        <p className="text-sm text-gray-600 mt-4 text-center">
+        <p className="text-sm text-gray-600 dark:text-slate-400 mt-4 text-center">
           Puntuación ponderada total basada en tus criterios configurados
         </p>
       </div>
 
-      <div className="bg-white rounded-xl shadow-lg p-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">
+      <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-xl shadow-lg p-8">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-slate-100 mb-6">
           Contribución por Criterio
         </h2>
         <ResponsiveContainer width="100%" height={400}>
@@ -163,64 +163,64 @@ export const ResultsPage: React.FC = () => {
             <Bar dataKey="cast" name="Reparto" stackId="a" fill="#e0f2fe" />
           </BarChart>
         </ResponsiveContainer>
-        <p className="text-sm text-gray-600 mt-4 text-center">
+        <p className="text-sm text-gray-600 dark:text-slate-400 mt-4 text-center">
           Desglose de puntuación por cada criterio de evaluación
         </p>
       </div>
 
-      <div className="bg-white rounded-xl shadow-lg p-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">
+      <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-xl shadow-lg p-8">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-slate-100 mb-6">
           Ranking Detallado
         </h2>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="bg-gray-50 border-b-2 border-gray-200">
-                <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Posición</th>
-                <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">Película</th>
-                <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">Puntuación Total</th>
-                <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">Calificación</th>
-                <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">Duración</th>
-                <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">Género</th>
-                <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">Director</th>
-                <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700">Reparto</th>
+              <tr className="bg-gray-50 dark:bg-slate-800 border-b-2 border-gray-200 dark:border-slate-700">
+                <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700 dark:text-slate-300">Posición</th>
+                <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700 dark:text-slate-300">Película</th>
+                <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700 dark:text-slate-300">Puntuación Total</th>
+                <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700 dark:text-slate-300">Calificación</th>
+                <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700 dark:text-slate-300">Duración</th>
+                <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700 dark:text-slate-300">Género</th>
+                <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700 dark:text-slate-300">Director</th>
+                <th className="px-4 py-3 text-center text-sm font-semibold text-gray-700 dark:text-slate-300">Reparto</th>
               </tr>
             </thead>
             <tbody>
               {comparisonResults.map((result, index) => (
                 <tr
                   key={result.movie.id}
-                  className={`border-b border-gray-100 hover:bg-gray-50 ${index === 0 ? 'bg-sky-50' : ''}`}
+                  className={`border-b border-gray-100 dark:border-slate-800 hover:bg-gray-50 dark:hover:bg-slate-800 ${index === 0 ? 'bg-primary-50 dark:bg-slate-800' : ''}`}
                 >
                   <td className="px-4 py-3">
                     <div className="flex items-center space-x-2">
                       {index === 0 && <Trophy className="w-5 h-5 text-yellow-500" />}
-                      <span className="font-bold text-gray-900">{index + 1}</span>
+                      <span className="font-bold text-gray-900 dark:text-slate-100">{index + 1}</span>
                     </div>
                   </td>
                   <td className="px-4 py-3">
-                    <Link to={`/movie/${result.movie.id}`} className="font-medium text-sky-600 hover:text-sky-700">
+                    <Link to={`/movie/${result.movie.id}`} className="font-medium text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300">
                       {result.movie.title}
                     </Link>
                   </td>
                   <td className="px-4 py-3 text-center">
-                    <span className="font-bold text-sky-600">
+                    <span className="font-bold text-primary-600 dark:text-primary-400">
                       {Math.round(result.totalScore * 100)}%
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-center text-sm text-gray-600">
+                  <td className="px-4 py-3 text-center text-sm text-gray-600 dark:text-slate-400">
                     {Math.round(result.criteriaScores.rating * 100)}
                   </td>
-                  <td className="px-4 py-3 text-center text-sm text-gray-600">
+                  <td className="px-4 py-3 text-center text-sm text-gray-600 dark:text-slate-400">
                     {Math.round(result.criteriaScores.duration * 100)}
                   </td>
-                  <td className="px-4 py-3 text-center text-sm text-gray-600">
+                  <td className="px-4 py-3 text-center text-sm text-gray-600 dark:text-slate-400">
                     {Math.round(result.criteriaScores.genre * 100)}
                   </td>
-                  <td className="px-4 py-3 text-center text-sm text-gray-600">
+                  <td className="px-4 py-3 text-center text-sm text-gray-600 dark:text-slate-400">
                     {Math.round(result.criteriaScores.director * 100)}
                   </td>
-                  <td className="px-4 py-3 text-center text-sm text-gray-600">
+                  <td className="px-4 py-3 text-center text-sm text-gray-600 dark:text-slate-400">
                     {Math.round(result.criteriaScores.cast * 100)}
                   </td>
                 </tr>
@@ -230,16 +230,16 @@ export const ResultsPage: React.FC = () => {
         </div>
       </div>
 
-      <div className="bg-sky-50 rounded-xl p-6">
-        <h3 className="font-semibold text-gray-900 mb-2">¿Cómo se calculan estos resultados?</h3>
-        <p className="text-sm text-gray-700 leading-relaxed">
+      <div className="bg-primary-50 dark:bg-slate-800 rounded-xl p-6">
+        <h3 className="font-semibold text-gray-900 dark:text-slate-100 mb-2">¿Cómo se calculan estos resultados?</h3>
+        <p className="text-sm text-gray-700 dark:text-slate-300 leading-relaxed">
           Los resultados se calculan utilizando el método WSM (Weighted Sum Model). Cada película se evalúa
           según los criterios que configuraste, asignando valores normalizados de 0 a 1 para cada aspecto.
           Luego, estos valores se multiplican por los pesos que asignaste a cada criterio, y se suman para
           obtener una puntuación total. La película con la puntuación más alta es la más compatible con tus preferencias.
         </p>
         {targetDuration != null && (
-          <p className="text-xs text-gray-600 mt-2">
+          <p className="text-xs text-gray-600 dark:text-slate-400 mt-2">
             Nota: para el criterio Duración, se usa proximidad a un objetivo de {targetDuration} min (las películas más cercanas puntúan más alto).
           </p>
         )}

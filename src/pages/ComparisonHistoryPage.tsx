@@ -103,8 +103,8 @@ export const ComparisonHistoryPage: React.FC = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Historial de Comparaciones</h1>
-          <p className="text-gray-600">Revisa tus comparaciones anteriores o inicia una nueva</p>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-slate-100">Historial de Comparaciones</h1>
+          <p className="text-gray-600 dark:text-slate-400">Revisa tus comparaciones anteriores o inicia una nueva</p>
         </div>
         <Button onClick={handleNewComparison} className="flex items-center space-x-2">
           <Plus className="w-5 h-5" />
@@ -123,11 +123,11 @@ export const ComparisonHistoryPage: React.FC = () => {
           return (
             <div
               key={entry.id}
-              className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition cursor-pointer"
+              className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-gray-200 dark:border-slate-800 overflow-hidden hover:shadow-md transition cursor-pointer"
               onClick={() => handleOpenComparison(entry)}
             >
               <div className="p-5 space-y-4">
-                <div className="flex items-center justify-between text-sm text-gray-500">
+                <div className="flex items-center justify-between text-sm text-gray-500 dark:text-slate-400">
                   <div className="flex items-center space-x-2">
                     <Clock className="w-4 h-4" />
                     <span>{entry.date}</span>
@@ -135,24 +135,24 @@ export const ComparisonHistoryPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <div className="text-gray-700 truncate" title={vsText}>{vsText}</div>
+                  <div className="text-gray-700 dark:text-slate-300 truncate" title={vsText}>{vsText}</div>
                 </div>
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
                     <Trophy className="w-6 h-6 text-yellow-500" />
                     <div>
-                      <div className="text-sm text-gray-500">Ganadora</div>
-                      <div className="font-semibold text-gray-900">{winner.title}</div>
+                      <div className="text-sm text-gray-500 dark:text-slate-400">Ganadora</div>
+                      <div className="font-semibold text-gray-900 dark:text-slate-100">{winner.title}</div>
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-xs text-gray-500">Compatibilidad</div>
-                    <div className="text-lg font-bold text-sky-600">{score}%</div>
+                    <div className="text-xs text-gray-500 dark:text-slate-400">Compatibilidad</div>
+                    <div className="text-lg font-bold text-primary-600 dark:text-primary-400">{score}%</div>
                   </div>
                 </div>
               </div>
-              <div className="px-5 py-3 bg-gray-50 border-t border-gray-200 text-sky-600 flex items-center justify-end space-x-2">
+              <div className="px-5 py-3 bg-gray-50 dark:bg-slate-800 border-t border-gray-200 dark:border-slate-800 text-primary-600 dark:text-primary-400 flex items-center justify-end space-x-2">
                 <span>Ver resultado</span>
                 <ArrowRight className="w-4 h-4" />
               </div>

@@ -42,11 +42,11 @@ export const ComparePage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">
+      <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-slate-800">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-slate-100 mb-4">
           Comparar Películas
         </h1>
-        <p className="text-gray-600 mb-6">
+        <p className="text-gray-600 dark:text-slate-400 mb-6">
           Selecciona las películas que deseas comparar y configura los criterios de evaluación
         </p>
 
@@ -58,15 +58,15 @@ export const ComparePage: React.FC = () => {
               placeholder="Buscar por título o género..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 text-gray-900 dark:text-slate-100 placeholder:text-gray-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent"
             />
           </div>
         </div>
 
         {selectedMovies.length > 0 && (
-          <div className="mt-6 p-4 bg-sky-50 rounded-lg">
+          <div className="mt-6 p-4 bg-primary-50 dark:bg-slate-800 rounded-lg">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-semibold text-gray-900">
+              <h3 className="font-semibold text-gray-900 dark:text-slate-100">
                 Películas Seleccionadas: {selectedMovies.length}
               </h3>
               <Button
@@ -83,7 +83,7 @@ export const ComparePage: React.FC = () => {
               {selectedMovies.map(movie => (
                 <span
                   key={movie.id}
-                  className="px-3 py-1 bg-white text-gray-700 rounded-full text-sm font-medium flex items-center space-x-2 border border-sky-200"
+                  className="px-3 py-1 bg-white dark:bg-slate-800 text-gray-700 dark:text-slate-300 rounded-full text-sm font-medium flex items-center space-x-2 border border-primary-200 dark:border-slate-700"
                 >
                   <span>{movie.title}</span>
                   <button

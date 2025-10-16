@@ -67,8 +67,8 @@ export const CriteriaModal: React.FC<CriteriaModalProps> = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Configurar Criterios de Comparación" size="lg">
       <div className="space-y-6">
-        <div className="bg-sky-50 rounded-lg p-4">
-          <p className="text-sm text-gray-700">
+        <div className="bg-primary-50 dark:bg-slate-800 rounded-lg p-4">
+          <p className="text-sm text-gray-700 dark:text-slate-300">
             Ajusta la importancia de cada criterio según tus preferencias. Los pesos se normalizarán automáticamente.
           </p>
         </div>
@@ -110,23 +110,23 @@ export const CriteriaModal: React.FC<CriteriaModalProps> = ({
           />
         </div>
 
-        <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-          <span className="text-sm font-medium text-gray-700">Total de pesos:</span>
-          <span className={`text-lg font-bold ${totalWeight === 100 ? 'text-green-600' : 'text-sky-600'}`}>
+        <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-slate-800 rounded-lg">
+          <span className="text-sm font-medium text-gray-700 dark:text-slate-300">Total de pesos:</span>
+          <span className={`text-lg font-bold ${totalWeight === 100 ? 'text-green-600' : 'text-primary-600 dark:text-primary-400'}`}>
             {totalWeight}%
           </span>
         </div>
 
-        <div className="space-y-3 p-4 rounded-lg border border-gray-200">
+        <div className="space-y-3 p-4 rounded-lg border border-gray-200 dark:border-slate-800">
           <div className="flex items-center justify-between">
-            <label className="font-medium text-gray-800">Usar duración objetivo</label>
+            <label className="font-medium text-gray-800 dark:text-slate-100">Usar duración objetivo</label>
             <input type="checkbox" checked={useTarget} onChange={(e) => setUseTarget(e.target.checked)} />
           </div>
 
           {useTarget && (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
               <div>
-                <label className="block text-sm text-gray-600 mb-1">Duración objetivo (min)</label>
+                <label className="block text-sm font-medium text-gray-800 dark:text-slate-200 mb-1">Duración objetivo (min)</label>
                 <input
                   type="number"
                   min={60}
@@ -134,7 +134,7 @@ export const CriteriaModal: React.FC<CriteriaModalProps> = ({
                   step={5}
                   value={localTarget}
                   onChange={(e) => setLocalTarget(Math.max(0, Number(e.target.value)))}
-                  className="w-full border rounded px-3 py-2"
+                  className="w-full border border-gray-300 dark:border-slate-700 rounded px-3 py-2 bg-white dark:bg-slate-900 text-gray-900 dark:text-slate-100 placeholder:text-gray-400"
                 />
               </div>
               <div className="md:col-span-2">

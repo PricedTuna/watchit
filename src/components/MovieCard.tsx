@@ -26,8 +26,8 @@ export const MovieCard: React.FC<MovieCardProps> = ({
 
   const CardContent = (
     <div
-      className={`bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition cursor-pointer ${
-        isSelected ? 'ring-2 ring-sky-500' : ''
+      className={`bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition cursor-pointer ${
+        isSelected ? 'ring-2 ring-primary-500' : ''
       }`}
       onClick={handleClick}
     >
@@ -37,7 +37,7 @@ export const MovieCard: React.FC<MovieCardProps> = ({
             type="checkbox"
             checked={isSelected}
             onChange={() => onSelect && onSelect(movie)}
-            className="w-5 h-5 text-sky-500 rounded focus:ring-sky-500"
+            className="w-5 h-5 text-primary-600 rounded focus:ring-primary-500"
           />
         </div>
       )}
@@ -51,7 +51,7 @@ export const MovieCard: React.FC<MovieCardProps> = ({
       </div>
 
       <div className="p-4">
-        <h3 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">
+        <h3 className="text-lg font-bold text-gray-900 dark:text-slate-100 mb-2 line-clamp-2">
           {movie.title}
         </h3>
 
@@ -59,7 +59,7 @@ export const MovieCard: React.FC<MovieCardProps> = ({
           <StarRating rating={movie.rating} size="sm" />
         </div>
 
-        <div className="flex items-center justify-between text-sm text-gray-600 mb-2">
+        <div className="flex items-center justify-between text-sm text-gray-600 dark:text-slate-400 mb-2">
           <div className="flex items-center space-x-1">
             <Calendar className="w-4 h-4" />
             <span>{movie.releaseYear}</span>
@@ -74,14 +74,14 @@ export const MovieCard: React.FC<MovieCardProps> = ({
           {movie.genres.slice(0, 3).map(genre => (
             <span
               key={genre}
-              className="px-2 py-1 text-xs font-medium bg-sky-100 text-sky-700 rounded"
+              className="px-2 py-1 text-xs font-medium bg-primary-100 text-primary-700 dark:bg-slate-800 dark:text-primary-300 dark:border dark:border-slate-700 rounded"
             >
               {genre}
             </span>
           ))}
         </div>
 
-        <p className="mt-2 text-sm text-gray-600 line-clamp-2">
+        <p className="mt-2 text-sm text-gray-600 dark:text-slate-400 line-clamp-2">
           {movie.synopsis}
         </p>
       </div>

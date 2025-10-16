@@ -20,8 +20,8 @@ export const MovieDetailPage: React.FC = () => {
   if (!movie) {
     return (
       <div className="text-center py-12">
-        <h2 className="text-2xl font-bold text-gray-900">Película no encontrada</h2>
-        <Link to="/" className="text-sky-500 hover:text-sky-600 mt-4 inline-block">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-slate-100">Película no encontrada</h2>
+        <Link to="/" className="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 mt-4 inline-block">
           Volver al inicio
         </Link>
       </div>
@@ -43,15 +43,15 @@ export const MovieDetailPage: React.FC = () => {
     <div className="space-y-6">
       <Link
         to="/"
-        className="inline-flex items-center space-x-2 text-sky-500 hover:text-sky-600 transition"
+        className="inline-flex items-center space-x-2 text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 transition"
       >
         <ArrowLeft className="w-5 h-5" />
         <span>Volver al inicio</span>
       </Link>
 
-      <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+      <div className="bg-white dark:bg-slate-900 rounded-xl shadow-lg overflow-hidden border border-gray-200 dark:border-slate-800">
         <div className="md:flex">
-          <div className="md:w-1/3 bg-gray-200">
+          <div className="md:w-1/3 bg-gray-200 dark:bg-slate-800">
             <img
               src={movie.posterUrl}
               alt={movie.title}
@@ -60,28 +60,28 @@ export const MovieDetailPage: React.FC = () => {
           </div>
 
           <div className="md:w-2/3 p-8">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-slate-100 mb-4">
               {movie.title}
             </h1>
 
             <div className="flex items-center space-x-6 mb-6">
               <div className="flex items-center space-x-2">
-                <Calendar className="w-5 h-5 text-gray-500" />
-                <span className="text-gray-700">{movie.releaseYear}</span>
+                <Calendar className="w-5 h-5 text-gray-500 dark:text-slate-400" />
+                <span className="text-gray-700 dark:text-slate-300">{movie.releaseYear}</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Clock className="w-5 h-5 text-gray-500" />
-                <span className="text-gray-700">{movie.duration} min</span>
+                <Clock className="w-5 h-5 text-gray-500 dark:text-slate-400" />
+                <span className="text-gray-700 dark:text-slate-300">{movie.duration} min</span>
               </div>
             </div>
 
             <div className="mb-6">
-              <h3 className="text-sm font-semibold text-gray-700 mb-2">Géneros</h3>
+              <h3 className="text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">Géneros</h3>
               <div className="flex flex-wrap gap-2">
                 {movie.genres.map(genre => (
                   <span
                     key={genre}
-                    className="px-3 py-1 text-sm font-medium bg-sky-100 text-sky-700 rounded-full"
+                    className="px-3 py-1 text-sm font-medium bg-primary-100 text-primary-700 dark:bg-slate-800 dark:text-primary-300 dark:border dark:border-slate-700 rounded-full"
                   >
                     {genre}
                   </span>
@@ -90,7 +90,7 @@ export const MovieDetailPage: React.FC = () => {
             </div>
 
             <div className="mb-6">
-              <h3 className="text-sm font-semibold text-gray-700 mb-2 flex items-center space-x-2">
+              <h3 className="text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2 flex items-center space-x-2">
                 <Star className="w-5 h-5" />
                 <span>Calificación General</span>
               </h3>
@@ -98,8 +98,8 @@ export const MovieDetailPage: React.FC = () => {
             </div>
 
             {user && (
-              <div className="mb-6 p-4 bg-sky-50 rounded-lg">
-                <h3 className="text-sm font-semibold text-gray-700 mb-2">
+              <div className="mb-6 p-4 bg-primary-50 dark:bg-slate-800 rounded-lg">
+                <h3 className="text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">
                   Tu Calificación
                 </h3>
                 <StarRating
@@ -109,7 +109,7 @@ export const MovieDetailPage: React.FC = () => {
                   size="lg"
                 />
                 {userRating > 0 && (
-                  <p className="text-sm text-gray-600 mt-2">
+                  <p className="text-sm text-gray-600 dark:text-slate-400 mt-2">
                     Has calificado esta película con {userRating} estrellas
                   </p>
                 )}
@@ -117,15 +117,15 @@ export const MovieDetailPage: React.FC = () => {
             )}
 
             <div className="mb-6">
-              <h3 className="text-sm font-semibold text-gray-700 mb-2 flex items-center space-x-2">
+              <h3 className="text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2 flex items-center space-x-2">
                 <User className="w-5 h-5" />
                 <span>Director</span>
               </h3>
-              <p className="text-gray-700">{movie.director}</p>
+              <p className="text-gray-700 dark:text-slate-300">{movie.director}</p>
             </div>
 
             <div className="mb-6">
-              <h3 className="text-sm font-semibold text-gray-700 mb-2 flex items-center space-x-2">
+              <h3 className="text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2 flex items-center space-x-2">
                 <Users className="w-5 h-5" />
                 <span>Reparto Principal</span>
               </h3>
@@ -133,7 +133,7 @@ export const MovieDetailPage: React.FC = () => {
                 {movie.cast.map(actor => (
                   <span
                     key={actor}
-                    className="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded"
+                    className="px-3 py-1 text-sm bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 rounded border border-gray-200 dark:border-slate-700"
                   >
                     {actor}
                   </span>
@@ -142,8 +142,8 @@ export const MovieDetailPage: React.FC = () => {
             </div>
 
             <div className="mb-6">
-              <h3 className="text-sm font-semibold text-gray-700 mb-2">Sinopsis</h3>
-              <p className="text-gray-700 leading-relaxed">{movie.synopsis}</p>
+              <h3 className="text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">Sinopsis</h3>
+              <p className="text-gray-700 dark:text-slate-300 leading-relaxed">{movie.synopsis}</p>
             </div>
 
             <div className="flex gap-4">

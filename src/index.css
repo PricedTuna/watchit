@@ -1,3 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: 248 250 252; /* slate-50 */
+    --text: 15 23 42; /* slate-900 */
+    --muted: 100 116 139; /* slate-500 */
+    --surface: 241 245 249; /* slate-100 */
+    --border: 226 232 240; /* slate-200 */
+    --primary: 37 99 235; /* primary-600 */
+  }
+  .dark {
+    color-scheme: dark;
+    --bg: 2 6 23; /* slate-950 */
+    --text: 241 245 249; /* slate-100 */
+    --muted: 148 163 184; /* slate-400 */
+    --surface: 15 23 42; /* slate-900 */
+    --border: 51 65 85; /* slate-700 */
+    --primary: 37 99 235; /* primary-600 */
+  }
+  body {
+    @apply antialiased;
+    background-color: rgb(var(--bg));
+    color: rgb(var(--text));
+  }
+}
