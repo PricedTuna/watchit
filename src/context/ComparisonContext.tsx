@@ -6,11 +6,13 @@ interface ComparisonContextType {
   selectedMovies: Movie[];
   criteriaWeights: CriteriaWeights;
   comparisonResults: ComparisonResult[] | null;
+  targetDuration?: number;
   addMovie: (movie: Movie) => void;
   removeMovie: (movieId: number) => void;
   clearSelection: () => void;
   setCriteriaWeights: (weights: CriteriaWeights) => void;
   setComparisonResults: (results: ComparisonResult[]) => void;
+  setTargetDuration: (minutes: number | undefined) => void;
   resetComparison: () => void;
 }
 
@@ -20,6 +22,7 @@ export const ComparisonProvider: React.FC<{ children: ReactNode }> = ({ children
   const [selectedMovies, setSelectedMovies] = useState<Movie[]>([]);
   const [criteriaWeights, setCriteriaWeightsState] = useState<CriteriaWeights>({ ...defaultCriteriaWeights });
   const [comparisonResults, setComparisonResultsState] = useState<ComparisonResult[] | null>(null);
+  const [targetDuration, setTargetDurationState] = useState<number | undefined>(undefined);
 
   const addMovie = (movie: Movie) => {
     if (!selectedMovies.find(m => m.id === movie.id)) {
@@ -43,10 +46,15 @@ export const ComparisonProvider: React.FC<{ children: ReactNode }> = ({ children
     setComparisonResultsState(results);
   };
 
+  const setTargetDuration = (minutes: number | undefined) => {
+    setTargetDurationState(minutes);
+  };
+
   const resetComparison = () => {
     setSelectedMovies([]);
     setCriteriaWeightsState({ ...defaultCriteriaWeights });
     setComparisonResultsState(null);
+    setTargetDurationState(undefined);
   };
 
   return (
@@ -54,11 +62,13 @@ export const ComparisonProvider: React.FC<{ children: ReactNode }> = ({ children
       selectedMovies,
       criteriaWeights,
       comparisonResults,
+      targetDuration,
       addMovie,
       removeMovie,
       clearSelection,
       setCriteriaWeights,
       setComparisonResults,
+      setTargetDuration,
       resetComparison
     }}>
       {children}

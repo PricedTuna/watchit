@@ -44,7 +44,9 @@ export const compareMovies = (
   weights: CriteriaWeights,
   userFavoriteGenres: string[] = [],
   userTopDirectors: string[] = [],
-  userTopActors: string[] = []
+  userTopActors: string[] = [],
+  targetDuration?: number,
+  durationTolerance: number = 60
 ): ComparisonResult[] => {
   if (movies.length === 0) return [];
 
@@ -65,9 +67,13 @@ export const compareMovies = (
     cast: weights.cast / totalWeight,
   };
 
+  const clamp01 = (x: number) => Math.max(0, Math.min(1, x));
+
   const results: ComparisonResult[] = movies.map(movie => {
     const normalizedRating = normalizeValue(movie.rating, minRating, maxRating, true);
-    const normalizedDuration = normalizeValue(movie.duration, minDuration, maxDuration, false);
+    const normalizedDuration = (targetDuration != null)
+      ? (1 - clamp01(Math.abs(movie.duration - targetDuration) / Math.max(durationTolerance, 1)))
+      : normalizeValue(movie.duration, minDuration, maxDuration, false);
     const normalizedGenre = calculateGenreMatch(movie.genres, userFavoriteGenres);
     const normalizedDirector = calculateDirectorScore(movie.director, userTopDirectors);
     const normalizedCast = calculateCastScore(movie.cast, userTopActors);

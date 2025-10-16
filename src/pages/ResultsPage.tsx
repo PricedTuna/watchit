@@ -9,7 +9,7 @@ import { Button } from '../components/Button';
 import { StarRating } from '../components/StarRating';
 
 export const ResultsPage: React.FC = () => {
-  const { selectedMovies, criteriaWeights, comparisonResults, setComparisonResults, resetComparison } = useComparison();
+  const { selectedMovies, criteriaWeights, comparisonResults, setComparisonResults, resetComparison, targetDuration } = useComparison();
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -33,7 +33,9 @@ export const ResultsPage: React.FC = () => {
         criteriaWeights,
         user?.favoriteGenres || [],
         topDirectors,
-        topActors
+        topActors,
+        targetDuration,
+        60
       );
 
       setComparisonResults(results);
@@ -105,9 +107,14 @@ export const ResultsPage: React.FC = () => {
       </div>
 
       <div className="bg-white rounded-xl shadow-lg p-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">
           Compatibilidad General
         </h2>
+        {targetDuration != null && (
+          <div className="text-sm text-gray-600 mb-4">
+            Duración objetivo activa: <span className="font-medium">{targetDuration} min</span>
+          </div>
+        )}
         <ResponsiveContainer width="100%" height={400}>
           <BarChart data={compatibilityData} layout="vertical">
             <CartesianGrid strokeDasharray="3 3" />
@@ -219,6 +226,11 @@ export const ResultsPage: React.FC = () => {
           Luego, estos valores se multiplican por los pesos que asignaste a cada criterio, y se suman para
           obtener una puntuación total. La película con la puntuación más alta es la más compatible con tus preferencias.
         </p>
+        {targetDuration != null && (
+          <p className="text-xs text-gray-600 mt-2">
+            Nota: para el criterio Duración, se usa proximidad a un objetivo de {targetDuration} min (las películas más cercanas puntúan más alto).
+          </p>
+        )}
       </div>
     </div>
   );

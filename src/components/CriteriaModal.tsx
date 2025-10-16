@@ -19,16 +19,20 @@ export const CriteriaModal: React.FC<CriteriaModalProps> = ({
   onClose,
   onComplete
 }) => {
-  const { criteriaWeights, setCriteriaWeights } = useComparison();
+  const { criteriaWeights, setCriteriaWeights, targetDuration, setTargetDuration } = useComparison();
   const { user } = useAuth();
 
   const [weights, setWeights] = useState<CriteriaWeights>(criteriaWeights);
+  const [useTarget, setUseTarget] = useState<boolean>(targetDuration != null);
+  const [localTarget, setLocalTarget] = useState<number>(targetDuration ?? 120);
 
   useEffect(() => {
     if (isOpen) {
       setWeights(criteriaWeights);
+      setUseTarget(targetDuration != null);
+      setLocalTarget(targetDuration ?? 120);
     }
-  }, [isOpen, criteriaWeights]);
+  }, [isOpen, criteriaWeights, targetDuration]);
 
   const totalWeight = Object.values(weights).reduce((sum, w) => sum + w, 0);
 
@@ -50,12 +54,13 @@ export const CriteriaModal: React.FC<CriteriaModalProps> = ({
       cast: Math.round((weights.cast / totalWeight) * 100),
     };
 
-    const total = Object.values(normalizedWeights).reduce((sum, w) => sum + w, 0);
-    if (total !== 100) {
-      normalizedWeights.rating += (100 - total);
+    const weightSum = Object.values(normalizedWeights).reduce((sum, w) => sum + w, 0);
+    if (weightSum !== 100) {
+      normalizedWeights.rating += (100 - weightSum);
     }
 
     setCriteriaWeights(normalizedWeights);
+    setTargetDuration(useTarget ? localTarget : undefined);
     onComplete();
   };
 
@@ -110,6 +115,44 @@ export const CriteriaModal: React.FC<CriteriaModalProps> = ({
           <span className={`text-lg font-bold ${totalWeight === 100 ? 'text-green-600' : 'text-sky-600'}`}>
             {totalWeight}%
           </span>
+        </div>
+
+        <div className="space-y-3 p-4 rounded-lg border border-gray-200">
+          <div className="flex items-center justify-between">
+            <label className="font-medium text-gray-800">Usar duración objetivo</label>
+            <input type="checkbox" checked={useTarget} onChange={(e) => setUseTarget(e.target.checked)} />
+          </div>
+
+          {useTarget && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+              <div>
+                <label className="block text-sm text-gray-600 mb-1">Duración objetivo (min)</label>
+                <input
+                  type="number"
+                  min={60}
+                  max={240}
+                  step={5}
+                  value={localTarget}
+                  onChange={(e) => setLocalTarget(Math.max(0, Number(e.target.value)))}
+                  className="w-full border rounded px-3 py-2"
+                />
+              </div>
+              <div className="md:col-span-2">
+                <Slider
+                  label={`Objetivo: ${localTarget} min`}
+                  value={localTarget}
+                  onChange={setLocalTarget}
+                  min={60}
+                  max={240}
+                  description="Las películas cercanas a este valor puntuarán más alto en Duración"
+                />
+              </div>
+            </div>
+          )}
+
+          <p className="text-xs text-gray-500">
+            Nota: si la duración objetivo está desactivada, se usará el método anterior (más corta = mejor).
+          </p>
         </div>
 
         <div className="flex gap-4">
