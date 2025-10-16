@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { User, UserRating } from '../types';
+import { User } from '../types';
 import { mockUsers, defaultCriteriaWeights } from '../data/users';
 
 interface AuthContextType {
@@ -43,7 +43,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const anonymousUser: User = {
       id: `anon-${Date.now()}`,
       email: 'anonymous@watchit.com',
-      name: 'Guest User',
+      name: 'Usuario invitado',
       isAnonymous: true,
       ratings: [],
       favoriteGenres: [],
