@@ -9,6 +9,7 @@ import { MovieDetailPage } from './pages/MovieDetailPage';
 import { ComparePage } from './pages/ComparePage';
 import { ResultsPage } from './pages/ResultsPage';
 import { ProfilePage } from './pages/ProfilePage';
+import { ComparisonHistoryPage } from './pages/ComparisonHistoryPage';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user } = useAuth();
@@ -33,6 +34,11 @@ const AppRoutes: React.FC = () => {
           </ProtectedRoute>
         } />
         <Route path="compare" element={
+          <ProtectedRoute>
+            <ComparisonHistoryPage />
+          </ProtectedRoute>
+        } />
+        <Route path="compare/start" element={
           <ProtectedRoute>
             <ComparePage />
           </ProtectedRoute>

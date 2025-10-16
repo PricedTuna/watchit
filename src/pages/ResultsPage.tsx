@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
 import { Trophy, RotateCcw, ArrowLeft } from 'lucide-react';
 import { useComparison } from '../context/ComparisonContext';
@@ -12,9 +12,21 @@ export const ResultsPage: React.FC = () => {
   const { selectedMovies, criteriaWeights, comparisonResults, setComparisonResults, resetComparison, targetDuration } = useComparison();
   const { user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const state = location.state as any;
+  const providedResults = state?.comparisonResults as any[] | undefined;
 
   useEffect(() => {
+    // If results are provided from history, prefer them and skip recalculation/redirects
+    if (providedResults) {
+      if (!comparisonResults || comparisonResults.length === 0) {
+        setComparisonResults(providedResults as any);
+      }
+      return;
+    }
+
     if (selectedMovies.length < 2) {
+      // If no provided results, go back to the comparison entry (history)
       navigate('/compare');
       return;
     }
@@ -40,7 +52,7 @@ export const ResultsPage: React.FC = () => {
 
       setComparisonResults(results);
     }
-  }, [selectedMovies, criteriaWeights, user, comparisonResults, setComparisonResults, navigate]);
+  }, [selectedMovies, criteriaWeights, user, comparisonResults, setComparisonResults, navigate, providedResults]);
 
   if (!comparisonResults || comparisonResults.length === 0) {
     return <div className="text-center py-12">Calculando resultados...</div>;
@@ -50,23 +62,23 @@ export const ResultsPage: React.FC = () => {
 
   const compatibilityData = comparisonResults.map(result => ({
     name: result.movie.title.length > 20 ? result.movie.title.substring(0, 20) + '...' : result.movie.title,
-    Compatibilidad: Math.round(result.totalScore * 100)
+    compatibility: Math.round(result.totalScore * 100)
   }));
 
   const criteriaData = comparisonResults.map(result => ({
     name: result.movie.title.length > 15 ? result.movie.title.substring(0, 15) + '...' : result.movie.title,
-    Calificación: Math.round(result.criteriaScores.rating * 100),
-    Duración: Math.round(result.criteriaScores.duration * 100),
-    Género: Math.round(result.criteriaScores.genre * 100),
-    Director: Math.round(result.criteriaScores.director * 100),
-    Reparto: Math.round(result.criteriaScores.cast * 100),
+    rating: Math.round(result.criteriaScores.rating * 100),
+    duration: Math.round(result.criteriaScores.duration * 100),
+    genre: Math.round(result.criteriaScores.genre * 100),
+    director: Math.round(result.criteriaScores.director * 100),
+    cast: Math.round(result.criteriaScores.cast * 100),
   }));
 
   const COLORS = ['#0ea5e9', '#38bdf8', '#7dd3fc', '#bae6fd', '#e0f2fe'];
 
   const handleNewComparison = () => {
     resetComparison();
-    navigate('/compare');
+    navigate('/compare/start');
   };
 
   return (
@@ -121,7 +133,7 @@ export const ResultsPage: React.FC = () => {
             <XAxis type="number" domain={[0, 100]} />
             <YAxis dataKey="name" type="category" width={150} />
             <Tooltip formatter={(value) => `${value}%`} />
-            <Bar dataKey="Compatibilidad" radius={[0, 8, 8, 0]}>
+            <Bar dataKey="compatibility" name="Compatibilidad" radius={[0, 8, 8, 0]}>
               {compatibilityData.map((_, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}
@@ -144,11 +156,11 @@ export const ResultsPage: React.FC = () => {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="Calificación" stackId="a" fill="#0ea5e9" />
-            <Bar dataKey="Duración" stackId="a" fill="#38bdf8" />
-            <Bar dataKey="Género" stackId="a" fill="#7dd3fc" />
-            <Bar dataKey="Director" stackId="a" fill="#bae6fd" />
-            <Bar dataKey="Reparto" stackId="a" fill="#e0f2fe" />
+            <Bar dataKey="rating" name="Calificación" stackId="a" fill="#0ea5e9" />
+            <Bar dataKey="duration" name="Duración" stackId="a" fill="#38bdf8" />
+            <Bar dataKey="genre" name="Género" stackId="a" fill="#7dd3fc" />
+            <Bar dataKey="director" name="Director" stackId="a" fill="#bae6fd" />
+            <Bar dataKey="cast" name="Reparto" stackId="a" fill="#e0f2fe" />
           </BarChart>
         </ResponsiveContainer>
         <p className="text-sm text-gray-600 mt-4 text-center">
