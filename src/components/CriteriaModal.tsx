@@ -43,6 +43,12 @@ export const CriteriaModal: React.FC<CriteriaModalProps> = ({
   const handleReset = () => {
     const defaults = user?.defaultCriteriaWeights || defaultCriteriaWeights;
     setWeights(defaults);
+    if (user?.defaultTargetDuration != null) {
+      setUseTarget(true);
+      setLocalTarget(user.defaultTargetDuration);
+    } else {
+      setUseTarget(false);
+    }
   };
 
   const handleSave = () => {

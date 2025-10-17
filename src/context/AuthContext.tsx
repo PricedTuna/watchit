@@ -10,6 +10,7 @@ interface AuthContextType {
   addRating: (movieId: number, rating: number) => void;
   updateFavoriteGenres: (genres: string[]) => void;
   updateDefaultWeights: (weights: typeof defaultCriteriaWeights) => void;
+  updateDefaultTargetDuration: (minutes: number | undefined) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -33,7 +34,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       isAnonymous: false,
       ratings: [],
       favoriteGenres: [],
-      defaultCriteriaWeights: { ...defaultCriteriaWeights }
+      defaultCriteriaWeights: { ...defaultCriteriaWeights },
+      defaultTargetDuration: undefined
     };
     setUser(loggedInUser);
     localStorage.setItem('watchit_user', JSON.stringify(loggedInUser));
@@ -47,7 +49,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       isAnonymous: true,
       ratings: [],
       favoriteGenres: [],
-      defaultCriteriaWeights: { ...defaultCriteriaWeights }
+      defaultCriteriaWeights: { ...defaultCriteriaWeights },
+      defaultTargetDuration: undefined
     };
     setUser(anonymousUser);
     localStorage.setItem('watchit_user', JSON.stringify(anonymousUser));
@@ -89,6 +92,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     localStorage.setItem('watchit_user', JSON.stringify(updatedUser));
   };
 
+  const updateDefaultTargetDuration = (minutes: number | undefined) => {
+    if (!user) return;
+    const updatedUser = { ...user, defaultTargetDuration: minutes };
+    setUser(updatedUser);
+    localStorage.setItem('watchit_user', JSON.stringify(updatedUser));
+  };
+
   return (
     <AuthContext.Provider value={{
       user,
@@ -97,7 +107,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       logout,
       addRating,
       updateFavoriteGenres,
-      updateDefaultWeights
+      updateDefaultWeights,
+      updateDefaultTargetDuration
     }}>
       {children}
     </AuthContext.Provider>

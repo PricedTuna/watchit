@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import { ComparisonProvider } from './context/ComparisonContext';
 import { Layout } from './components/Layout';
 import { LoginPage } from './pages/LoginPage';
+import { RegisterPage } from './pages/RegisterPage';
 import { HomePage } from './pages/HomePage';
 import { MovieDetailPage } from './pages/MovieDetailPage';
 import { ComparePage } from './pages/ComparePage';
@@ -22,6 +23,7 @@ const AppRoutes: React.FC = () => {
   return (
     <Routes>
       <Route path="/login" element={user ? <Navigate to="/" /> : <LoginPage />} />
+      <Route path="/register" element={user ? <Navigate to="/" /> : <RegisterPage />} />
       <Route path="/" element={<Layout />}>
         <Route index element={
           <ProtectedRoute>

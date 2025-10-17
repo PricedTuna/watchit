@@ -10,11 +10,13 @@ import { CriteriaWeights } from '../types';
 import { Link } from 'react-router-dom';
 
 export const ProfilePage: React.FC = () => {
-  const { user, updateFavoriteGenres, updateDefaultWeights } = useAuth();
+  const { user, updateFavoriteGenres, updateDefaultWeights, updateDefaultTargetDuration } = useAuth();
   const [selectedGenres, setSelectedGenres] = useState<string[]>(user?.favoriteGenres || []);
   const [weights, setWeights] = useState<CriteriaWeights>(
     user?.defaultCriteriaWeights || defaultCriteriaWeights
   );
+  const [useTarget, setUseTarget] = useState<boolean>(user?.defaultTargetDuration != null);
+  const [localTarget, setLocalTarget] = useState<number>(user?.defaultTargetDuration ?? 120);
 
   if (!user) {
     return (
@@ -48,7 +50,20 @@ export const ProfilePage: React.FC = () => {
   };
 
   const handleSaveWeights = () => {
-    updateDefaultWeights(weights);
+    const total = Object.values(weights).reduce((sum, w) => sum + w, 0);
+    const normalized: CriteriaWeights = total > 0 ? {
+      rating: Math.round((weights.rating / total) * 100),
+      duration: Math.round((weights.duration / total) * 100),
+      genre: Math.round((weights.genre / total) * 100),
+      director: Math.round((weights.director / total) * 100),
+      cast: Math.round((weights.cast / total) * 100),
+    } : weights;
+    const sum = Object.values(normalized).reduce((s, w) => s + w, 0);
+    if (sum !== 100) {
+      normalized.rating += (100 - sum);
+    }
+    updateDefaultWeights(normalized);
+    updateDefaultTargetDuration(useTarget ? localTarget : undefined);
     alert('Configuración de criterios guardada');
   };
 
@@ -161,6 +176,12 @@ export const ProfilePage: React.FC = () => {
           Establece los pesos predeterminados para tus comparaciones futuras
         </p>
 
+        <div className="bg-primary-50 dark:bg-slate-800 rounded-lg p-4 mb-6">
+          <p className="text-sm text-gray-700 dark:text-slate-300">
+            Ajusta la importancia de cada criterio según tus preferencias. Los pesos se normalizarán automáticamente.
+          </p>
+        </div>
+
         <div className="space-y-6 mb-6">
           <Slider
             label="Calificación"
@@ -203,6 +224,44 @@ export const ProfilePage: React.FC = () => {
           <span className={`text-lg font-bold ${totalWeight === 100 ? 'text-green-600' : 'text-primary-600 dark:text-primary-400'}`}>
             {totalWeight}%
           </span>
+        </div>
+
+        <div className="space-y-3 p-4 rounded-lg border border-gray-200 dark:border-slate-800 mb-6">
+          <div className="flex items-center justify-between">
+            <label className="font-medium text-gray-800 dark:text-slate-100">Usar duración objetivo</label>
+            <input type="checkbox" checked={useTarget} onChange={(e) => setUseTarget(e.target.checked)} />
+          </div>
+
+          {useTarget && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+              <div>
+                <label className="block text-sm font-medium text-gray-800 dark:text-slate-200 mb-1">Duración objetivo (min)</label>
+                <input
+                  type="number"
+                  min={60}
+                  max={240}
+                  step={5}
+                  value={localTarget}
+                  onChange={(e) => setLocalTarget(Math.max(0, Number(e.target.value)))}
+                  className="w-full border border-gray-300 dark:border-slate-700 rounded px-3 py-2 bg-white dark:bg-slate-900 text-gray-900 dark:text-slate-100 placeholder:text-gray-400"
+                />
+              </div>
+              <div className="md:col-span-2">
+                <Slider
+                  label={`Objetivo: ${localTarget} min`}
+                  value={localTarget}
+                  onChange={setLocalTarget}
+                  min={60}
+                  max={240}
+                  description="Las películas cercanas a este valor puntuarán más alto en Duración"
+                />
+              </div>
+            </div>
+          )}
+
+          <p className="text-xs text-gray-500">
+            Nota: si la duración objetivo está desactivada, se usará el método anterior (más corta = mejor).
+          </p>
         </div>
 
         <div className="flex gap-4">

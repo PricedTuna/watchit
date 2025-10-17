@@ -19,6 +19,7 @@ export interface User {
   ratings: UserRating[];
   favoriteGenres: string[];
   defaultCriteriaWeights: CriteriaWeights;
+  defaultTargetDuration?: number;
 }
 
 export interface UserRating {
