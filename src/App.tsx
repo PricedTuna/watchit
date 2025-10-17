@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ComparisonProvider } from './context/ComparisonContext';
+import { ToastProvider } from './context/ToastContext';
 import { Layout } from './components/Layout';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
@@ -11,6 +12,7 @@ import { ComparePage } from './pages/ComparePage';
 import { ResultsPage } from './pages/ResultsPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { ComparisonHistoryPage } from './pages/ComparisonHistoryPage';
+import ToastContainer from './components/ToastContainer';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user } = useAuth();
@@ -64,11 +66,14 @@ const AppRoutes: React.FC = () => {
 function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <ComparisonProvider>
-          <AppRoutes />
-        </ComparisonProvider>
-      </AuthProvider>
+      <ToastProvider>
+        <AuthProvider>
+          <ComparisonProvider>
+            <AppRoutes />
+            <ToastContainer />
+          </ComparisonProvider>
+        </AuthProvider>
+      </ToastProvider>
     </BrowserRouter>
   );
 }

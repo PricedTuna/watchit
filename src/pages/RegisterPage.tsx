@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Film, Mail, Lock, LogIn } from 'lucide-react';
 import { Button } from '../components/Button';
+import { useToast } from '../context/ToastContext';
 
 export const RegisterPage: React.FC = () => {
+  const toast = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -12,7 +14,7 @@ export const RegisterPage: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Solo UI: sin funcionalidad real de registro
-    alert('Registro de demostración. Esta acción no crea una cuenta real.');
+    toast.info('Registro de demostración. Esta acción no crea una cuenta real.');
     navigate('/login');
   };
 

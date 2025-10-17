@@ -6,8 +6,10 @@ import { useComparison } from '../context/ComparisonContext';
 import { MovieCard } from '../components/MovieCard';
 import { Button } from '../components/Button';
 import { CriteriaModal } from '../components/CriteriaModal';
+import { useToast } from '../context/ToastContext';
 
 export const ComparePage: React.FC = () => {
+  const toast = useToast();
   const { selectedMovies, addMovie, removeMovie, clearSelection } = useComparison();
   const [searchTerm, setSearchTerm] = useState('');
   const [isCriteriaModalOpen, setIsCriteriaModalOpen] = useState(false);
@@ -29,7 +31,7 @@ export const ComparePage: React.FC = () => {
 
   const handleOpenCriteria = () => {
     if (selectedMovies.length < 2) {
-      alert('Por favor selecciona al menos 2 películas para comparar');
+      toast.warning('Por favor selecciona al menos 2 películas para comparar');
       return;
     }
     setIsCriteriaModalOpen(true);

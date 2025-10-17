@@ -8,8 +8,10 @@ import { Slider } from '../components/Slider';
 import { StarRating } from '../components/StarRating';
 import { CriteriaWeights } from '../types';
 import { Link } from 'react-router-dom';
+import { useToast } from '../context/ToastContext';
 
 export const ProfilePage: React.FC = () => {
+  const toast = useToast();
   const { user, updateFavoriteGenres, updateDefaultWeights, updateDefaultTargetDuration } = useAuth();
   const [selectedGenres, setSelectedGenres] = useState<string[]>(user?.favoriteGenres || []);
   const [weights, setWeights] = useState<CriteriaWeights>(
@@ -42,7 +44,7 @@ export const ProfilePage: React.FC = () => {
 
   const handleSaveGenres = () => {
     updateFavoriteGenres(selectedGenres);
-    alert('Géneros favoritos actualizados');
+    toast.success('Géneros favoritos actualizados');
   };
 
   const handleWeightChange = (criterion: keyof CriteriaWeights, value: number) => {
@@ -64,7 +66,7 @@ export const ProfilePage: React.FC = () => {
     }
     updateDefaultWeights(normalized);
     updateDefaultTargetDuration(useTarget ? localTarget : undefined);
-    alert('Configuración de criterios guardada');
+    toast.success('Configuración de criterios guardada');
   };
 
   const handleResetWeights = () => {
